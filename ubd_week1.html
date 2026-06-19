@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UbD — Week 1 · Computer Applications</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue: #003DA5;
+    --blue-mid: #1A56C4;
+    --blue-faint: #EBF0FB;
+    --red: #CC2229;
+    --red-faint: #FFF0F0;
+    --white: #FFFFFF;
+    --ink: #111827;
+    --muted: #6B7280;
+    --border: #D1D9E6;
+    --bg: #F7F9FC;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--blue);
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header-slash {
+    position: absolute;
+    top: 0; right: 0;
+    width: 280px; height: 100%;
+    background: var(--red);
+    clip-path: polygon(22% 0, 100% 0, 100% 100%, 0% 100%);
+    opacity: 0.88;
+  }
+
+  .header-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 44px 32px 36px;
+  }
+
+  .header-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 10px;
+  }
+
+  header h1 {
+    font-size: clamp(22px, 4vw, 34px);
+    font-weight: 900;
+    line-height: 1.15;
+    max-width: 560px;
+  }
+
+  header h1 em {
+    font-style: normal;
+    color: #FFD166;
+  }
+
+  .header-meta {
+    margin-top: 18px;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .meta-item span:first-child {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.45);
+  }
+
+  .meta-item span:last-child {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--white);
+  }
+
+  /* STAGE TABS */
+  .stage-nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .stage-nav-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    gap: 0;
+  }
+
+  .stage-tab {
+    padding: 14px 20px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'Space Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    border-bottom: 3px solid transparent;
+    cursor: default;
+    white-space: nowrap;
+  }
+
+  .stage-tab.active {
+    color: var(--blue);
+    border-bottom-color: var(--blue);
+  }
+
+  .stage-tab {
+    cursor: pointer;
+  }
+
+  .stage-tab .num {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--blue-faint);
+    color: var(--blue);
+    font-size: 10px;
+    text-align: center;
+    line-height: 18px;
+    margin-right: 6px;
+  }
+
+  /* MAIN */
+  main {
+    max-width: 900px;
+    margin: 40px auto 60px;
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  /* STAGE BLOCKS */
+  .stage {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--white);
+  }
+
+  .stage-header {
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stage-header.s1 { background: var(--blue); color: var(--white); }
+  .stage-header.s2 { background: var(--red); color: var(--white); }
+  .stage-header.s3 { background: #1A56C4; color: var(--white); }
+
+  .stage-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: rgba(255,255,255,0.2);
+    padding: 4px 10px;
+    border-radius: 99px;
+    white-space: nowrap;
+  }
+
+  .stage-title {
+    font-size: 17px;
+    font-weight: 800;
+  }
+
+  .stage-subtitle {
+    font-size: 12px;
+    opacity: 0.7;
+    margin-top: 2px;
+  }
+
+  .stage-body {
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* FIELD */
+  .field-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .field-group.full { grid-template-columns: 1fr; }
+  .field-group.three { grid-template-columns: 1fr 1fr 1fr; }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .field-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--blue);
+    font-weight: 700;
+  }
+
+  .field-label.red { color: var(--red); }
+  .field-label.mid { color: var(--blue-mid); }
+
+  .field-content {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 14px;
+    line-height: 1.65;
+    color: #374151;
+    min-height: 60px;
+  }
+
+  .field-content.tall { min-height: 100px; }
+  .field-content.short { min-height: 44px; }
+
+  .field-content ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .field-content ul li {
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .field-content ul li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--red);
+    font-weight: 700;
+  }
+
+  /* SECTION DIVIDER */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 4px 0;
+  }
+
+  .section-divider span {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .section-divider::before,
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* EVIDENCE TABLE */
+  .evidence-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .evidence-table thead tr {
+    background: var(--blue-faint);
+  }
+
+  .evidence-table thead th {
+    padding: 10px 14px;
+    text-align: left;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--blue);
+    font-weight: 700;
+  }
+
+  .evidence-table tbody tr {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .evidence-table tbody tr:last-child { border-bottom: none; }
+
+  .evidence-table tbody td {
+    padding: 12px 14px;
+    color: #374151;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  .evidence-table tbody td:first-child {
+    font-weight: 700;
+    color: var(--ink);
+    width: 30%;
+  }
+
+  .badge {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 3px 8px;
+    border-radius: 99px;
+  }
+
+  .badge.formative { background: var(--blue-faint); color: var(--blue); }
+  .badge.summative { background: var(--red-faint); color: var(--red); }
+
+  /* LEARNING PLAN */
+  .day-row {
+    display: grid;
+    grid-template-columns: 110px 1fr 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .day-label {
+    background: var(--blue);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 10px;
+    text-align: center;
+  }
+
+  .day-label .day-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .day-label .day-focus {
+    font-size: 11px;
+    font-weight: 600;
+    margin-top: 4px;
+    color: #FFD166;
+    line-height: 1.3;
+  }
+
+  .day-cell {
+    padding: 14px 16px;
+    border-left: 1px solid var(--border);
+    font-size: 13px;
+    color: #374151;
+    line-height: 1.6;
+  }
+
+  .day-cell-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+
+  .day-cell ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .day-cell ul li {
+    padding-left: 14px;
+    position: relative;
+    font-size: 12px;
+  }
+
+  .day-cell ul li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--red);
+    font-weight: 900;
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  /* STANDARDS */
+  .standard-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--blue-faint);
+    border: 1px solid rgba(0,61,165,0.15);
+    border-radius: 99px;
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--blue);
+    margin: 3px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--blue);
+    color: rgba(255,255,255,0.55);
+    text-align: center;
+    font-size: 11px;
+    padding: 18px;
+    margin-top: 8px;
+  }
+
+  footer strong { color: white; }
+
+  @media (max-width: 680px) {
+    .field-group, .field-group.three { grid-template-columns: 1fr; }
+    .day-row { grid-template-columns: 1fr; }
+    .day-label { flex-direction: row; justify-content: flex-start; gap: 12px; }
+    .day-cell { border-left: none; border-top: 1px solid var(--border); }
+    .stage-nav-inner { overflow-x: auto; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-slash"></div>
+  <div class="header-inner">
+    <p class="header-eyebrow">Understanding by Design · Computer Applications · 9th Grade</p>
+    <h1>Unit Plan: <em>Who Are You, Digitally?</em></h1>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span>Teacher</span>
+        <span>Ms. Ma. Elena Montes</span>
+      </div>
+      <div class="meta-item">
+        <span>Duration</span>
+        <span>Week 1 (5 days)</span>
+      </div>
+      <div class="meta-item">
+        <span>Grade</span>
+        <span>9th Grade</span>
+      </div>
+      <div class="meta-item">
+        <span>Unit</span>
+        <span>Diagnostic & Introduction</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="stage-nav">
+  <div class="stage-nav-inner">
+    <div class="stage-tab active" onclick="goTo('stage1', this)"><span class="num">1</span>Desired Results</div>
+    <div class="stage-tab" onclick="goTo('stage2', this)"><span class="num">2</span>Evidence</div>
+    <div class="stage-tab" onclick="goTo('stage3', this)"><span class="num">3</span>Learning Plan</div>
+  </div>
+</nav>
+
+<script>
+function goTo(id, el) {
+  document.querySelectorAll('.stage-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  const target = document.getElementById(id);
+  const offset = document.querySelector('.stage-nav').offsetHeight + 16;
+  window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
+}
+</script>
+
+<main>
+
+  <!-- STAGE 1: DESIRED RESULTS -->
+  <div class="stage" id="stage1">
+    <div class="stage-header s1">
+      <span class="stage-badge">Stage 1</span>
+      <div>
+        <div class="stage-title">Desired Results</div>
+        <div class="stage-subtitle">What do we want students to understand, know, and be able to do?</div>
+      </div>
+    </div>
+    <div class="stage-body">
+
+      <div class="field-group full">
+        <div class="field">
+          <div class="field-label">Established Goals / Standards</div>
+          <div class="field-content">
+            <div style="display:flex;flex-wrap:wrap;gap:12px;">
+              <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-start;">
+                <span class="standard-pill">ISTE 1 — Empowered Learner</span>
+                <span style="font-size:11px;color:var(--muted);padding-left:4px;">Students set goals and reflect on their own learning process.</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-start;">
+                <span class="standard-pill">ISTE 6 — Creative Communicator</span>
+                <span style="font-size:11px;color:var(--muted);padding-left:4px;">Students communicate ideas using digital tools and platforms.</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-start;">
+                <span class="standard-pill">Google Apps Proficiency</span>
+                <span style="font-size:11px;color:var(--muted);padding-left:4px;">Competent use of Google Workspace tools for creation and collaboration.</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-start;">
+                <span class="standard-pill">Digital Literacy</span>
+                <span style="font-size:11px;color:var(--muted);padding-left:4px;">Understanding how to select and use digital tools appropriately.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-divider"><span>Understandings & Questions</span></div>
+
+      <div class="field-group">
+        <div class="field">
+          <div class="field-label">Enduring Understandings</div>
+          <div class="field-content tall">
+            <ul>
+              <li>The tools we choose to communicate reflect how we think and work digitally.</li>
+              <li>Knowing what you already know is the first step to learning something new.</li>
+              <li>Digital presentation is a skill — clarity and organization matter as much as content.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="field">
+          <div class="field-label">Essential Questions</div>
+          <div class="field-content tall">
+            <ul>
+              <li>How do I present myself effectively in a digital environment?</li>
+              <li>What do my tool choices say about how I work?</li>
+              <li>What digital skills do I already have — and where do I want to grow?</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-divider"><span>Knowledge & Skills</span></div>
+
+      <div class="field-group">
+        <div class="field">
+          <div class="field-label">Students will Know…</div>
+          <div class="field-content tall">
+            <ul>
+              <li>What tools are available for digital content creation (Slides, Canva, Docs, etc.)</li>
+              <li>The basic elements of visual organization and readability</li>
+              <li>The expectations and grading criteria for Computer Applications</li>
+            </ul>
+          </div>
+        </div>
+        <div class="field">
+          <div class="field-label">Students will be able to Do…</div>
+          <div class="field-content tall">
+            <ul>
+              <li>Select and use a digital tool independently to create a structured visual product</li>
+              <li>Present their work clearly to an audience within a time limit</li>
+              <li>Reflect honestly on their own digital skill level in writing</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STAGE 2: EVIDENCE -->
+  <div class="stage" id="stage2">
+    <div class="stage-header s2">
+      <span class="stage-badge">Stage 2</span>
+      <div>
+        <div class="stage-title">Assessment Evidence</div>
+        <div class="stage-subtitle">How will we know if students have achieved the desired results?</div>
+      </div>
+    </div>
+    <div class="stage-body">
+
+      <div class="field-group full">
+        <div class="field">
+          <div class="field-label red">Performance Task</div>
+          <div class="field-content">
+            Students create a <strong>Digital Identity Card</strong> using any tool of their choice. The card must include their name, 3 specific computer skills they already have, 1 tech skill they want to learn this year, something personal about themselves, and at least one meaningful image. Students present their card to the class (2 min max) and submit a written reflection on Friday.
+          </div>
+        </div>
+      </div>
+
+      <div class="section-divider"><span>Grading Criteria</span></div>
+
+      <table class="evidence-table">
+        <thead>
+          <tr>
+            <th>Criterion</th>
+            <th>Description</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>All 5 Required Elements</td>
+            <td>Name, 3 skills, 1 goal, personal info, and at least one image — all present and complete</td>
+            <td><span class="badge formative">Formative</span></td>
+          </tr>
+          <tr>
+            <td>Visual Clarity</td>
+            <td>Information is easy to read and organized — not cluttered or hard to follow</td>
+            <td><span class="badge formative">Formative</span></td>
+          </tr>
+          <tr>
+            <td>Oral Presentation</td>
+            <td>Presented clearly to class within 2 minutes; student can answer a peer question</td>
+            <td><span class="badge formative">Formative</span></td>
+          </tr>
+          <tr>
+            <td>Friday Reflection</td>
+            <td>"What did you discover about your digital skills this week?" — honest, thoughtful answer submitted in Google Classroom before end of class</td>
+            <td><span class="badge formative">Formative</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="field-group full">
+        <div class="field">
+          <div class="field-label red">Teacher Observation Notes (Diagnostic)</div>
+          <div class="field-content tall">
+            While students work Tuesday–Wednesday, observe and note: Which tools do students reach for naturally? Who experiments vs. who plays it safe? Who struggles with basic file management or layout? Who finishes early and goes beyond requirements? This informal data informs pacing and grouping for the rest of the semester.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STAGE 3: LEARNING PLAN -->
+  <div class="stage" id="stage3">
+    <div class="stage-header s3">
+      <span class="stage-badge">Stage 3</span>
+      <div>
+        <div class="stage-title">Learning Plan</div>
+        <div class="stage-subtitle">What sequence of teaching and learning experiences will get students there?</div>
+      </div>
+    </div>
+    <div class="stage-body">
+
+      <!-- MONDAY -->
+      <div class="day-row">
+        <div class="day-label">
+          <span class="day-name">Mon</span>
+          <span class="day-focus">Intro & Brainstorm</span>
+        </div>
+        <div class="day-cell">
+          <div class="day-cell-label">Activities</div>
+          <ul>
+            <li>Course syllabus overview (10 min)</li>
+            <li>Class brainstorm: what tools do you know?</li>
+            <li>Assignment walkthrough — review instruction page</li>
+            <li>Students begin planning their card</li>
+          </ul>
+        </div>
+        <div class="day-cell">
+          <div class="day-cell-label">Teacher Role</div>
+          <ul>
+            <li>Facilitate brainstorm discussion</li>
+            <li>Clarify expectations and answer questions</li>
+            <li>Begin informal observation</li>
+          </ul>
+        </div>
+        <div class="day-cell">
+          <div class="day-cell-label">Resources</div>
+          <ul>
+            <li>Assignment instruction page</li>
+            <li>Google Classroom post</li>
+            <li>Projector / whiteboard</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- TUESDAY -->
+      <div class="day-row">
+        <div class="day-label">
+          <span class="day-name">Tue</span>
+          <span class="day-focus">Work Session 1</span>
+        </div>
+        <div class="day-cell">
+          <div class="day-cell-label">Activities</div>
+          <ul>
+            <li>Students choose their tool and begin building</li>
+            <li>Include all 5 required elements</li>
+            <li>No teacher-directed instruction — independent work</li>
+          </ul>
+        </div>
+        <div class="day-cell">
+          <div class="day-cell-label">Teacher Role</div>
+          <ul>
+            <li>Circulate and observe only</li>
+            <li>Take diagnostic notes on tool choice and skill level</li>
+            <li>No hints or direct help</li>
+          </ul>
+        </div>
+        <div class="day-cell">
+          <div class="day-cell-label">Resources</div>
+          <ul>
+            <li>Classroom computers</li>
+            <li>Student's tool of choice</li>
+            <li>Teacher observation checklist</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- WEDNESDAY -->
+      <div class="day-row">
+        <div class="day-label">
+          <span class="day-name">Wed</span>
+          <span class="day-focus">Work Session 2</span>
+        </div>
+        <div class="day-cell">
+          <div class="day-cell-label">Activities</div>
+          <ul>
+            <li>Continue and refine card</li>
+            <li>Check all 5 required elements are present</li>
+            <li>Prepare a 2-minute verbal presentation</li>
+          </ul>
+        </div>
+        <div class="day-cell">
+          <div class="day-cell-label">Teacher Role</div>
+          <ul>
+            <li>Continue observation</li>
+            <li>Remind students of presentation timing</li>
+            <li>Begin noting who may need extra time</li>
+          </ul>
+        </div>
+        <div class="day-cell">
+          <div class="day-cell-label">Resources</div>
+          <ul>
+            <li>Classroom computers</li>
+            <li>Assignment rubric on screen</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- THURSDAY -->
+      <div class="day-row">
+        <div class="day-label">
+          <span class="day-name">Thu</span>
+          <span class="day-focus">Presentations</span>
+        </div>
+        <div class="day-cell">
+          <div class="day-cell-label">Activities</div>
+          <ul>
+            <li>Each student presents (2 min max)</li>
+            <li>Classmates ask 1 question per presenter</li>
+            <li>Submit card to Google Classroom</li>
+          </ul>
+        </div>
+        <div class="day-cell">
+          <div class="day-cell-label">Teacher Role</div>
+          <ul>
+            <li>Facilitate Q&A</li>
+            <li>Keep time per presenter</li>
+            <li>Record observations for grade</li>
+          </ul>
+        </div>
+        <div class="day-cell">
+          <div class="day-cell-label">Resources</div>
+          <ul>
+            <li>Projector / TV screen</li>
+            <li>Google Classroom submission</li>
+            <li>Timer</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- FRIDAY -->
+      <div class="day-row">
+        <div class="day-label" style="background: var(--red);">
+          <span class="day-name">Fri</span>
+          <span class="day-focus">Reflection</span>
+        </div>
+        <div class="day-cell">
+          <div class="day-cell-label">Activities</div>
+          <ul>
+            <li>Written reflection in Google Classroom</li>
+            <li>Prompt: <em>"What did you discover about your digital skills this week?"</em></li>
+            <li>Due before end of class</li>
+          </ul>
+        </div>
+        <div class="day-cell">
+          <div class="day-cell-label">Teacher Role</div>
+          <ul>
+            <li>Debrief week as a class (10 min)</li>
+            <li>Share what was observed across the group</li>
+            <li>Preview what's coming next unit</li>
+          </ul>
+        </div>
+        <div class="day-cell">
+          <div class="day-cell-label">Resources</div>
+          <ul>
+            <li>Google Classroom assignment</li>
+            <li>Reflection prompt on screen</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <strong>Understanding by Design · Computer Applications · 9th Grade</strong> &nbsp;·&nbsp; Ms. Ma. Elena Montes &nbsp;·&nbsp; The American School of Tampico &nbsp;·&nbsp; 2026–2027
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 1 Assignment — Computer Applications</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue: #003DA5;
+    --blue-light: #1A56C4;
+    --blue-faint: #EBF0FB;
+    --red: #CC2229;
+    --white: #FFFFFF;
+    --ink: #111827;
+    --muted: #6B7280;
+    --border: #D1D9E6;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #F7F9FC;
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--blue);
+    position: relative;
+    overflow: hidden;
+    padding: 48px 40px 40px;
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; right: -60px;
+    width: 260px; height: 100%;
+    background: var(--red);
+    transform: skewX(-12deg);
+    opacity: .85;
+  }
+
+  .header-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 760px;
+  }
+
+  .course-tag {
+    display: inline-block;
+    background: #F5C400;
+    color: #111827;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 16px;
+  }
+
+  header h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+
+  header h1 span { color: #F5C400; }
+
+  .header-meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .meta-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.55);
+  }
+
+  .meta-value {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--white);
+  }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 860px;
+    margin: 48px auto;
+    padding: 0 24px;
+    display: grid;
+    gap: 32px;
+  }
+
+  /* ── OVERVIEW CARD ── */
+  .overview {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .overview-text h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--blue);
+    margin-bottom: 12px;
+  }
+
+  .overview-text p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #374151;
+  }
+
+  .overview-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .stat-pill {
+    background: var(--blue-faint);
+    border-left: 4px solid var(--blue);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .stat-pill .label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--blue);
+  }
+
+  .stat-pill .value {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  /* ── DELIVERABLE ── */
+  .deliverable-intro {
+    background: var(--blue);
+    color: var(--white);
+    border-radius: 12px;
+    padding: 28px 32px;
+  }
+
+  .deliverable-intro h2 {
+    font-size: 13px;
+    font-family: 'Space Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 8px;
+  }
+
+  .deliverable-intro p {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.6;
+    max-width: 680px;
+  }
+
+  .deliverable-intro p em {
+    font-style: normal;
+    color: #FFD166;
+  }
+
+  /* ── WEEK TIMELINE ── */
+  .section-title {
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .section-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .days-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+
+  .day-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .day-header {
+    background: var(--blue-faint);
+    padding: 10px 14px 8px;
+    border-bottom: 2px solid var(--blue);
+  }
+
+  .day-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--blue);
+    font-weight: 700;
+  }
+
+  .day-focus {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-top: 3px;
+    line-height: 1.3;
+  }
+
+  .day-body {
+    padding: 12px 14px;
+    flex: 1;
+  }
+
+  .day-body ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .day-body ul li {
+    font-size: 12px;
+    line-height: 1.4;
+    color: #374151;
+    padding-left: 14px;
+    position: relative;
+  }
+
+  .day-body ul li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--red);
+    font-weight: 700;
+  }
+
+  /* ── REQUIREMENTS ── */
+  .requirements {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .req-header {
+    background: var(--red);
+    color: var(--white);
+    padding: 18px 28px;
+  }
+
+  .req-header h2 {
+    font-size: 16px;
+    font-weight: 800;
+  }
+
+  .req-header p {
+    font-size: 12px;
+    opacity: 0.8;
+    margin-top: 2px;
+  }
+
+  .req-list {
+    padding: 24px 28px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .req-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .req-number {
+    background: var(--blue-faint);
+    color: var(--blue);
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .req-text strong {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  .req-text p {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ── TOOLS ── */
+  .tools-section {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+  }
+
+  .tools-section h2 {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+
+  .tools-section p {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+
+  .tools-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .tool-tag {
+    background: var(--blue-faint);
+    color: var(--blue);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 7px 14px;
+    border-radius: 99px;
+    border: 1px solid rgba(0,61,165,0.15);
+  }
+
+  .tool-tag.free-choice {
+    background: #FFF4F4;
+    color: var(--red);
+    border-color: rgba(204,34,41,0.15);
+  }
+
+  /* ── GRADING ── */
+  .grading {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .grading table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .grading thead {
+    background: var(--blue);
+    color: var(--white);
+  }
+
+  .grading thead th {
+    padding: 14px 20px;
+    text-align: left;
+    font-size: 12px;
+    font-family: 'Space Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+  }
+
+  .grading tbody tr {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .grading tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  .grading tbody td {
+    padding: 13px 20px;
+    font-size: 13px;
+    color: var(--ink);
+  }
+
+  .grading tbody td:last-child {
+    font-weight: 700;
+    color: var(--blue);
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--blue);
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    font-size: 12px;
+    padding: 20px;
+    margin-top: 24px;
+  }
+
+  footer strong {
+    color: var(--white);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 680px) {
+    .header-inner { flex-direction: column; align-items: flex-start; }
+    .header-meta { text-align: left; }
+    .overview { grid-template-columns: 1fr; }
+    .days-grid { grid-template-columns: 1fr 1fr; }
+    .req-list { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 440px) {
+    .days-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .day-card {
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fadeUp 0.4s ease forwards;
+    }
+    .day-card:nth-child(1) { animation-delay: 0.05s; }
+    .day-card:nth-child(2) { animation-delay: 0.10s; }
+    .day-card:nth-child(3) { animation-delay: 0.15s; }
+    .day-card:nth-child(4) { animation-delay: 0.20s; }
+    .day-card:nth-child(5) { animation-delay: 0.25s; }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="course-tag">Computer Applications · Week 1</div>
+    <h1>Who Are You, <span>Digitally?</span></h1>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Course</span>
+        <span class="meta-value">Computer Applications</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Grade</span>
+        <span class="meta-value">9th Grade</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Duration</span>
+        <span class="meta-value">Full Week</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Teacher</span>
+        <span class="meta-value">Ms. Montes</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+
+<main>
+
+  <!-- OVERVIEW -->
+  <div class="deliverable-intro">
+    <h2>What's This About?</h2>
+    <p>In this assignment you make a <em>Digital Identity Card</em> that introduces you to the class. Pick any app or software you're comfortable with. Your tool selection is part of the assignment.</p>
+  </div>
+
+  <!-- WEEK SCHEDULE -->
+  <div>
+    <p class="section-title">The Week</p>
+    <p class="section-sub">What we'll do each day.</p>
+    <div class="days-grid">
+      <div class="day-card">
+        <div class="day-header">
+          <div class="day-name">Monday</div>
+         
+        </div>
+        <div class="day-body">
+          <ul>
+            <li>Course Syllabus</li>
+            <li>Class brainstorm: what tools do you know?</li>
+            <li>Assignment walkthrough</li>
+            <li>Start planning your card</li>
+          </ul>
+        </div>
+      </div>
+      <div class="day-card">
+        <div class="day-header">
+          <div class="day-name">Tuesday</div>
+         
+        </div>
+        <div class="day-body">
+          <ul>
+            <li>Choose your tool</li>
+            <li>Start building your card</li>
+            <li>Include required content</li>
+        
+          </ul>
+        </div>
+      </div>
+      <div class="day-card">
+        <div class="day-header">
+          <div class="day-name">Wednesday</div>
+       
+        </div>
+        <div class="day-body">
+          <ul>
+            <li>Continue & refine</li>
+            <li>Make it visually clear</li>
+            <li>Check all 4 required elements</li>
+            <li>Prepare to present</li>
+          </ul>
+        </div>
+      </div>
+      <div class="day-card">
+        <div class="day-header">
+          <div class="day-name">Thursday</div>
+     
+        </div>
+        <div class="day-body">
+          <ul>
+            <li>2 min each presentation</li>
+            <li>Show your card on screen</li>
+            <li>Classmates ask 1 question</li>
+            <li>Submit to Google Classroom</li>
+          </ul>
+        </div>
+      </div>
+      <div class="day-card">
+        <div class="day-header">
+          <div class="day-name">Friday</div>
+   
+        </div>
+        <div class="day-body">
+          <ul>
+            <li>Written reflection in GC</li>
+            <strong><em>What did you discover about your digital skills this week?</em></strong>
+            
+       
+         
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REQUIREMENTS -->
+  <div class="requirements">
+    <div class="req-header">
+      <h2>Your card must include these 5 elements</h2>
+      <p>All four are required. Everything else is your creative choice.</p>
+    </div>
+    <div class="req-list">
+      <div class="req-item">
+        <div class="req-number">01</div>
+        <div class="req-text">
+          <strong>Your Name</strong>
+          <p>How you like to be called.</p>
+        </div>
+      </div>
+      <div class="req-item">
+        <div class="req-number">02</div>
+        <div class="req-text">
+          <strong>3 Things You Know How to Do on a Computer</strong>
+          <p>Be specific. "Use Google" doesn't count Ex: "build a Slides presentation with animations" does.</p>
+        </div>
+      </div>
+      <div class="req-item">
+        <div class="req-number">03</div>
+        <div class="req-text">
+          <strong>1 Tech Skill You Want to Learn This Year</strong>
+          <p>Something from class, from life, or from your own curiosity.</p>
+        </div>
+      </div>
+      <div class="req-item">
+        <div class="req-number">04</div>
+        <div class="req-text">
+          <strong>Something Personal About You</strong>
+          <p>A hobby, a fun fact, something that represents you</p>
+        </div>
+      </div>
+      <div class="req-item">
+        <div class="req-number">05</div>
+        <div class="req-text">
+          <strong>AImages</strong>
+          <p>A photo, icon, or graphic that represents you. No random clipart, make it mean something.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOOLS -->
+  <div class="tools-section">
+    <h2>Tool Choice: It's Up to You</h2>
+    <p>Use any software or platform you already know. Your choice tells us something about how you work. Here are some options, but you're not limited to these:</p>
+    <div class="tools-grid">
+      <span class="tool-tag">Google Slides</span>
+      <span class="tool-tag">Google Docs</span>
+      <span class="tool-tag">Google Drawing</span>
+      <span class="tool-tag">Canva</span>
+      <span class="tool-tag free-choice">Something else entirely ✦</span>
+    </div>
+  </div>
+
+  <!-- EXAMPLES -->
+  <div>
+    <p class="section-title">Examples</p>
+    <p class="section-sub">Here's what a strong card looks like.</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+
+      <!-- GOOD -->
+      <div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+          <span style="background:#16a34a; color:white; font-family:'Space Mono',monospace; font-size:10px; font-weight:700; padding:4px 12px; border-radius:99px; letter-spacing:0.08em;">✓ DO THIS</span>
+          <span style="font-size:12px; color:#6B7280;">Clear, complete, personal</span>
+        </div>
+        <!-- Slides chrome -->
+        <div style="border-radius:10px; overflow:hidden; border:1px solid #D1D9E6; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+          <!-- Title bar -->
+          <div style="background:#f1f3f4; padding:6px 10px; display:flex; align-items:center; gap:6px; border-bottom:1px solid #dadce0;">
+            <div style="width:8px;height:8px;border-radius:50%;background:#ea4335;"></div>
+            <div style="width:8px;height:8px;border-radius:50%;background:#fbbc04;"></div>
+            <div style="width:8px;height:8px;border-radius:50%;background:#34a853;"></div>
+            <span style="font-size:10px;color:#5f6368;margin-left:6px;font-family:sans-serif;">Digital Identity Card – Alex Rivera.pptx</span>
+          </div>
+          <!-- Toolbar -->
+          <div style="background:#fff; padding:4px 10px; border-bottom:1px solid #e0e0e0; display:flex; gap:10px; align-items:center;">
+            <span style="font-size:10px;color:#3c4043;font-family:sans-serif;">File</span>
+            <span style="font-size:10px;color:#3c4043;font-family:sans-serif;">Edit</span>
+            <span style="font-size:10px;color:#3c4043;font-family:sans-serif;">View</span>
+            <span style="font-size:10px;color:#3c4043;font-family:sans-serif;">Insert</span>
+            <div style="margin-left:auto;display:flex;gap:6px;">
+              <div style="width:16px;height:16px;background:#e8eaed;border-radius:3px;"></div>
+              <div style="width:16px;height:16px;background:#e8eaed;border-radius:3px;"></div>
+              <div style="width:16px;height:16px;background:#e8eaed;border-radius:3px;"></div>
+            </div>
+          </div>
+          <!-- Slide canvas -->
+          <div style="background:#e8eaed; padding:10px; display:flex; justify-content:center;">
+            <div style="width:100%; aspect-ratio:16/9; background:white; border-radius:2px; overflow:hidden; position:relative; box-shadow:0 1px 3px rgba(0,0,0,0.15);">
+              <!-- Slide content -->
+              <div style="position:absolute;top:0;left:0;width:30%;height:100%;background:#003DA5; display:flex;flex-direction:column;justify-content:center;align-items:center;padding:10px;">
+                <div style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:8px;">
+                  <span style="font-size:18px;color:white;font-family:sans-serif;font-weight:bold;">AR</span>
+                </div>
+                <span style="font-size:9px;color:white;font-family:sans-serif;font-weight:bold;text-align:center;line-height:1.4;">Alex Rivera</span>
+                <span style="font-size:7px;color:rgba(255,255,255,0.7);font-family:sans-serif;text-align:center;margin-top:3px;">9th Grade</span>
+              </div>
+              <div style="position:absolute;top:0;left:30%;right:0;height:100%;padding:10px 12px;display:flex;flex-direction:column;justify-content:space-between;">
+                <div>
+                  <div style="font-size:7px;color:#CC2229;font-family:sans-serif;font-weight:bold;letter-spacing:0.5px;margin-bottom:4px;">3 THINGS I KNOW</div>
+                  <div style="display:flex;flex-direction:column;gap:3px;">
+                    <div style="background:#EBF0FB;border-radius:3px;padding:3px 6px;font-size:7px;color:#003DA5;font-family:sans-serif;">Edit videos in CapCut</div>
+                    <div style="background:#EBF0FB;border-radius:3px;padding:3px 6px;font-size:7px;color:#003DA5;font-family:sans-serif;">Build Google Slides presentations</div>
+                    <div style="background:#EBF0FB;border-radius:3px;padding:3px 6px;font-size:7px;color:#003DA5;font-family:sans-serif;">Create spreadsheets with formulas</div>
+                  </div>
+                </div>
+                <div>
+                  <div style="font-size:7px;color:#CC2229;font-family:sans-serif;font-weight:bold;letter-spacing:0.5px;margin-bottom:4px;">I WANT TO LEARN</div>
+                  <div style="background:#FFF4F4;border-radius:3px;padding:3px 6px;font-size:7px;color:#CC2229;font-family:sans-serif;">How to code a website in HTML</div>
+                </div>
+                <div>
+                  <div style="font-size:7px;color:#6B7280;font-family:sans-serif;font-weight:bold;letter-spacing:0.5px;margin-bottom:3px;">ABOUT ME</div>
+                  <div style="font-size:7px;color:#374151;font-family:sans-serif;line-height:1.5;">I play soccer on weekends and dream of becoming a game developer.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BAD -->
+      <div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+          <span style="background:#dc2626; color:white; font-family:'Space Mono',monospace; font-size:10px; font-weight:700; padding:4px 12px; border-radius:99px; letter-spacing:0.08em;">✗ AVOID</span>
+          <span style="font-size:12px; color:#6B7280;">Vague, incomplete, no effort</span>
+        </div>
+        <!-- Slides chrome -->
+        <div style="border-radius:10px; overflow:hidden; border:1px solid #D1D9E6; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+          <!-- Title bar -->
+          <div style="background:#f1f3f4; padding:6px 10px; display:flex; align-items:center; gap:6px; border-bottom:1px solid #dadce0;">
+            <div style="width:8px;height:8px;border-radius:50%;background:#ea4335;"></div>
+            <div style="width:8px;height:8px;border-radius:50%;background:#fbbc04;"></div>
+            <div style="width:8px;height:8px;border-radius:50%;background:#34a853;"></div>
+            <span style="font-size:10px;color:#5f6368;margin-left:6px;font-family:sans-serif;">Untitled presentation</span>
+          </div>
+          <!-- Toolbar -->
+          <div style="background:#fff; padding:4px 10px; border-bottom:1px solid #e0e0e0; display:flex; gap:10px; align-items:center;">
+            <span style="font-size:10px;color:#3c4043;font-family:sans-serif;">File</span>
+            <span style="font-size:10px;color:#3c4043;font-family:sans-serif;">Edit</span>
+            <span style="font-size:10px;color:#3c4043;font-family:sans-serif;">View</span>
+            <span style="font-size:10px;color:#3c4043;font-family:sans-serif;">Insert</span>
+            <div style="margin-left:auto;display:flex;gap:6px;">
+              <div style="width:16px;height:16px;background:#e8eaed;border-radius:3px;"></div>
+              <div style="width:16px;height:16px;background:#e8eaed;border-radius:3px;"></div>
+              <div style="width:16px;height:16px;background:#e8eaed;border-radius:3px;"></div>
+            </div>
+          </div>
+          <!-- Slide canvas -->
+          <div style="background:#e8eaed; padding:10px; display:flex; justify-content:center; position:relative;">
+            <div style="width:100%; aspect-ratio:16/9; background:white; border-radius:2px; overflow:hidden; position:relative; box-shadow:0 1px 3px rgba(0,0,0,0.15);">
+              <!-- Messy slide content -->
+              <div style="background:#ff9999;width:100%;height:45%;display:flex;align-items:center;justify-content:center;">
+                <span style="font-size:20px;color:white;font-family:sans-serif;letter-spacing:4px;">★ ★ ★ ★ ★ ★</span>
+              </div>
+              <div style="padding:8px 10px;">
+                <div style="font-size:7px;color:#999;font-family:sans-serif;margin-bottom:4px;">name: alex</div>
+                <div style="font-size:7px;color:#555;font-family:sans-serif;">skills:</div>
+                <div style="font-size:7px;color:#555;font-family:sans-serif;">- use computer</div>
+                <div style="font-size:7px;color:#555;font-family:sans-serif;">- google</div>
+                <div style="font-size:7px;color:#555;font-family:sans-serif;">- idk</div>
+              </div>
+              <!-- Error callouts -->
+              <div style="position:absolute;bottom:22px;right:6px;display:flex;flex-direction:column;gap:3px;">
+                <div style="background:#fee2e2;border-radius:3px;padding:2px 6px;font-size:6.5px;color:#dc2626;font-family:sans-serif;font-weight:bold;">✗ Missing: goal for the year</div>
+                <div style="background:#fee2e2;border-radius:3px;padding:2px 6px;font-size:6.5px;color:#dc2626;font-family:sans-serif;font-weight:bold;">✗ Missing: something personal</div>
+                <div style="background:#fee2e2;border-radius:3px;padding:2px 6px;font-size:6.5px;color:#dc2626;font-family:sans-serif;font-weight:bold;">✗ Skills are way too vague</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- GRADING -->
+  <div class="grading">
+    <table>
+      <thead>
+        <tr>
+          <th>Rubrics</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>All 5 Required Elements</td>
+          <td>Name, 3 skills, 1 goal, personal info, and at least one image.</td>
+        </tr>
+        <tr>
+          <td>Visual Clarity</td>
+          <td>Information is easy to read and organized.</td>
+        </tr>
+        <tr>
+          <td>Presentation</td>
+          <td>Presented clearly to class within 2 minutes</td>
+        </tr>
+        <tr>
+          <td>Friday Reflection</td>
+          <td>Answer this question honestly before class ends: <em>"What did you discover about your digital skills this week?"</em></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<footer>
+  <strong>Computer Applications · 9th Grade</strong> &nbsp;·&nbsp; Ms. Ma. Elena Montes &nbsp;·&nbsp; mechavez@ats.edu.mx &nbsp;·&nbsp; The American School of Tampico
+</footer>
+
+</body>
+</html>

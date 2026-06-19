@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Classes — Ms. Montes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue: #003DA5;
+    --blue-light: #1A56C4;
+    --blue-faint: #EBF0FB;
+    --red: #CC2229;
+    --white: #FFFFFF;
+    --ink: #111827;
+    --muted: #6B7280;
+    --border: #D1D9E6;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #F7F9FC;
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--blue);
+    position: relative;
+    overflow: hidden;
+    padding: 48px 40px 40px;
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; right: -60px;
+    width: 260px; height: 100%;
+    background: var(--red);
+    transform: skewX(-12deg);
+    opacity: .85;
+  }
+
+  .header-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 760px;
+  }
+
+  .course-tag {
+    display: inline-block;
+    background: #F5C400;
+    color: #111827;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 16px;
+  }
+
+  header h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+
+  header h1 span { color: #F5C400; }
+
+  header p.subtitle {
+    color: rgba(255,255,255,.7);
+    font-size: 14px;
+    margin-top: 6px;
+  }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 860px;
+    margin: 48px auto;
+    padding: 0 24px;
+    display: grid;
+    gap: 28px;
+  }
+
+  /* ── CLASS CARD ── */
+  .class-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .class-head {
+    background: var(--blue-faint);
+    border-bottom: 2px solid var(--blue);
+    padding: 20px 28px;
+  }
+
+  .class-head .kicker {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--red);
+    font-weight: 700;
+  }
+
+  .class-head h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--blue);
+    margin-top: 4px;
+  }
+
+  .links {
+    padding: 20px 28px 24px;
+    display: grid;
+    gap: 10px;
+  }
+
+  .link-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--white);
+    transition: border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+  }
+
+  .link-row:hover {
+    border-color: var(--blue);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0,61,165,0.10);
+  }
+
+  .link-icon {
+    background: var(--blue-faint);
+    color: var(--blue);
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .link-text strong {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    display: block;
+  }
+
+  .link-text span {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .link-arrow {
+    margin-left: auto;
+    color: var(--red);
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--blue);
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    font-size: 12px;
+    padding: 20px;
+  }
+
+  footer strong { color: var(--white); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 680px) {
+    header h1 { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="course-tag">The American School of Tampico</div>
+    <h1>My <span>Classes</span></h1>
+    <p class="subtitle">Ms. Ma. Elena Montes · Pick a class to see its materials.</p>
+  </div>
+</header>
+
+<main>
+
+  <!-- COMP APP -->
+  <div class="class-card">
+    <div class="class-head">
+      <div class="kicker">Class 01</div>
+      <h2>Computer Applications</h2>
+    </div>
+    <div class="links">
+      <a class="link-row" href="comp%20app/ubd_week1.html">
+        <span class="link-icon">UbD</span>
+        <span class="link-text">
+          <strong>Week 1 — Unit Plan (UbD)</strong>
+          <span>Planning overview</span>
+        </span>
+        <span class="link-arrow">›</span>
+      </a>
+      <a class="link-row" href="comp%20app/week1_assignment%202627.html">
+        <span class="link-icon">01</span>
+        <span class="link-text">
+          <strong>Week 1 — Assignment</strong>
+          <span>Digital Identity Card</span>
+        </span>
+        <span class="link-arrow">›</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- MAKERSPACE -->
+  <div class="class-card">
+    <div class="class-head">
+      <div class="kicker">Class 02</div>
+      <h2>MakerSpace</h2>
+    </div>
+    <div class="links">
+      <a class="link-row" href="makerspace/ubd_makerspace_week1.html">
+        <span class="link-icon">UbD</span>
+        <span class="link-text">
+          <strong>Week 1 — Unit Plan (UbD)</strong>
+          <span>Planning overview</span>
+        </span>
+        <span class="link-arrow">›</span>
+      </a>
+      <a class="link-row" href="makerspace/makerspace_week1.html">
+        <span class="link-icon">01</span>
+        <span class="link-text">
+          <strong>Week 1 — Lesson</strong>
+          <span>Class materials</span>
+        </span>
+        <span class="link-arrow">›</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- AP COMPUTER PRINCIPLES -->
+  <div class="class-card">
+    <div class="class-head">
+      <div class="kicker">Class 03</div>
+      <h2>AP Computer Science Principles</h2>
+    </div>
+    <div class="links">
+      <a class="link-row" href="ap/AP_CSP_Practice_Exam1%20stundents.html">
+        <span class="link-icon">📝</span>
+        <span class="link-text">
+          <strong>Practice Exam 1 — Student Version</strong>
+          <span>For students</span>
+        </span>
+        <span class="link-arrow">›</span>
+      </a>
+      <a class="link-row" href="ap/AP_CSP_Practice_Exam1%20teacher.html">
+        <span class="link-icon">🔑</span>
+        <span class="link-text">
+          <strong>Practice Exam 1 — Teacher Version</strong>
+          <span>Answer key</span>
+        </span>
+        <span class="link-arrow">›</span>
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <strong>The American School of Tampico</strong> &nbsp;·&nbsp; Ms. Ma. Elena Montes &nbsp;·&nbsp; mechavez@ats.edu.mx
+</footer>
+
+</body>
+</html>
